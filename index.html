@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Codexi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-top:    #3D3066;
+      --bg-mid:    #261E46;
+      --bg-bottom: #0E0B1C;
+
+      --parchment:      #F2E9DA;
+      --parchment-dark: #EAE0CC;
+      --parchment-line: rgba(35,29,63,0.10);
+
+      --ink:       #231D3F;
+      --ink-mid:   #3C325A;
+      --ink-soft:  #6B5F88;
+
+      --gold:        #E6C36A;
+      --gold-dim:    rgba(230,195,106,0.18);
+      --gold-border: rgba(230,195,106,0.35);
+
+      --purple-accent: #5B3FA0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
+      background-attachment: fixed;
+      padding: 40px 16px 64px;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ── Logo header ── */
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .wordmark {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--parchment);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      display: block;
+    }
+    .tagline {
+      font-size: 0.85rem;
+      color: rgba(242,233,218,0.55);
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Parchment card ── */
+    .card {
+      background: var(--parchment);
+      border-radius: 32px;
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.45),
+        0 4px 16px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+      overflow: hidden;
+    }
+
+    /* ── Card header ── */
+    .card-header {
+      background: var(--ink);
+      padding: 28px 36px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--parchment);
+      letter-spacing: 0.05em;
+    }
+    .card-meta {
+      font-size: 0.72rem;
+      color: rgba(242,233,218,0.45);
+      margin-top: 6px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Card body ── */
+    .card-body { padding: 32px 36px 40px; }
+
+    /* ── Intro note ── */
+    .intro-note {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .intro-note .icon { font-size: 1.2rem; flex-shrink: 0; }
+    .intro-note p { font-size: 0.875rem; color: var(--ink-mid); line-height: 1.65; margin: 0; }
+    .intro-note strong { color: var(--ink); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 32px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-rule {
+      height: 1px;
+      background: var(--parchment-line);
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .section-num {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-shadow: 0 1px 0 rgba(0,0,0,0.06);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Prose ── */
+    p {
+      font-size: 0.9375rem;
+      color: var(--ink-mid);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--ink); font-weight: 600; }
+    .accent { color: var(--purple-accent); font-weight: 500; }
+
+    /* ── List ── */
+    ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    li { font-size: 0.9375rem; color: var(--ink-mid); line-height: 1.65; padding-left: 20px; position: relative; }
+    li::before { content: '◈'; position: absolute; left: 0; color: var(--ink-soft); font-size: 0.65rem; top: 6px; }
+
+    /* ── Data table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--parchment-line);
+      margin-top: 4px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    thead th {
+      background: var(--parchment-dark);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--parchment-line);
+    }
+    tbody td { padding: 11px 14px; color: var(--ink-mid); border-bottom: 1px solid rgba(35,29,63,0.06); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(35,29,63,0.025); }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 20px;
+      background: rgba(91,63,160,0.10);
+      color: var(--purple-accent);
+      border: 1px solid rgba(91,63,160,0.22);
+      white-space: nowrap;
+    }
+    .tag.gold {
+      background: var(--gold-dim);
+      color: #8B6914;
+      border-color: var(--gold-border);
+    }
+
+    /* ── Contact box ── */
+    .contact-box {
+      background: var(--ink);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(230,195,106,0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .contact-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(242,233,218,0.4);
+      margin-bottom: 8px;
+    }
+    .contact-box a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gold);
+      text-decoration: none;
+      display: block;
+    }
+    .contact-box a:hover { text-decoration: underline; }
+    .contact-box .sub { font-size: 0.8rem; color: rgba(242,233,218,0.35); margin-top: 8px; margin-bottom: 0; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: rgba(242,233,218,0.3);
+      letter-spacing: 0.04em;
+    }
+    footer span { color: rgba(230,195,106,0.55); }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .card-body { padding: 24px 20px 32px; }
+      .card-header { padding: 22px 20px 20px; }
+      .wordmark { font-size: 2.4rem; }
+      thead th:last-child, tbody td:last-child { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="logo-area">
+    <span class="wordmark">Codexi</span>
+    <span class="tagline">where your practice lives</span>
+  </div>
+
+  <div class="card">
+
+    <div class="card-header">
+      <div class="card-title">Privacy Policy</div>
+      <div class="card-meta">Effective April 12, 2026 &nbsp;·&nbsp; Finding The Beat LLC</div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="intro-note">
+        <span class="icon">🌙</span>
+        <p>
+          Codexi is built for your spiritual practice — a space that's <strong>yours</strong>.
+          We collect only what we need to make the app work, we never sell your data,
+          and your practice content belongs to you. This policy explains exactly what we collect, why, and your rights over it.
+        </p>
+      </div>
+
+      <!-- 01 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">01</span>
+          <h2>Who We Are</h2>
+        </div>
+        <p>Codexi is operated by <strong>Finding The Beat LLC</strong>, a sole-proprietor software company. "We," "us," and "our" refer to Finding The Beat LLC. "You" refers to any person who creates an account or uses the Codexi application.</p>
+        <p>Questions about this policy can be directed to us at the contact address at the bottom of this page.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 02 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">02</span>
+          <h2>Information We Collect</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Category</th><th>Examples</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tag">Account</span></td>
+                <td>Email address, display name (optional), hashed password</td>
+                <td>You, at signup</td>
+              </tr>
+              <tr>
+                <td><span class="tag">Practice content</span></td>
+                <td>Journals, rituals, workings, components, books, and collections you create</td>
+                <td>You, in the app</td>
+              </tr>
+              <tr>
+                <td><span class="tag">Usage data</span></td>
+                <td>Features used, screens visited, actions taken, session timestamps</td>
+                <td>Automatically collected</td>
+              </tr>
+              <tr>
+                <td><span class="tag gold">Crash &amp; error data</span></td>
+                <td>Stack traces, device OS version, app version, error context — via Sentry</td>
+                <td>Automatically collected</td>
+              </tr>
+              <tr>
+                <td><span class="tag gold">Device info</span></td>
+                <td>Device model, OS version, app version, timezone</td>
+                <td>Automatically collected</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:16px; font-size:0.875rem;">We do <strong>not</strong> collect payment card numbers, government ID, precise GPS location, or contact lists. We do not collect information about your spiritual beliefs beyond what you voluntarily enter into the app.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 03 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">03</span>
+          <h2>How We Use Your Information</h2>
+        </div>
+        <ul>
+          <li><strong>Provide and operate the app</strong> — authenticating your account, storing your practice content, syncing across devices.</li>
+          <li><strong>Improve the product</strong> — understanding which features are used and where friction exists, so we can make Codexi better.</li>
+          <li><strong>Diagnose and fix errors</strong> — crash reports and error logs (via Sentry) help us identify and resolve bugs quickly.</li>
+          <li><strong>Communicate with you</strong> — account-related emails only (verification, password reset, important policy changes). We will not send marketing email without your explicit opt-in.</li>
+          <li><strong>Enforce our Terms of Service</strong> — detecting abuse or policy violations.</li>
+          <li><strong>Legal compliance</strong> — meeting applicable legal obligations if required.</li>
+        </ul>
+        <p style="margin-top:16px; font-size:0.875rem;">We do <strong>not</strong> use your data to train AI models, sell advertising, or share it with data brokers.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 04 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">04</span>
+          <h2>Third-Party Services</h2>
+        </div>
+        <p>We use the following service providers to operate Codexi. Each has its own privacy policy governing their data practices.</p>
+        <ul style="margin-top:14px;">
+          <li><strong>Supabase</strong> — database and authentication infrastructure. Your account credentials and practice content are stored on Supabase-managed servers.<br><span style="font-size:0.8rem;color:var(--ink-soft);">supabase.com/privacy</span></li>
+          <li><strong>Sentry</strong> — error and crash monitoring. Sentry receives device and error context when the app encounters a problem.<br><span style="font-size:0.8rem;color:var(--ink-soft);">sentry.io/privacy</span></li>
+          <li><strong>Resend</strong> — transactional email delivery (account verification, password resets). Your email address is shared with Resend solely to deliver these messages.<br><span style="font-size:0.8rem;color:var(--ink-soft);">resend.com/privacy</span></li>
+          <li><strong>Analytics provider (future)</strong> — we plan to add an analytics tool to understand app usage at an aggregate level. We will update this policy and notify you before doing so.</li>
+        </ul>
+        <p style="margin-top:16px; font-size:0.875rem;">We do <strong>not</strong> share your personally identifiable information with any third party for their own marketing or advertising purposes.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 05 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">05</span>
+          <h2>Your Practice Content</h2>
+        </div>
+        <p>The rituals, journals, workings, and all other content you create in Codexi are <span class="accent">yours</span>. We do not claim ownership of your content, and we do not read it for commercial purposes.</p>
+        <p>Content you create is stored as private by default and is only accessible to your account unless you explicitly choose to share it. Seed content provided by the Codexi Library is read-only reference material we provide for your practice.</p>
+        <p>You may export or delete your content at any time — see Your Rights below.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 06 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">06</span>
+          <h2>Data Storage &amp; Security</h2>
+        </div>
+        <p>Your data is stored on servers managed by Supabase. We implement Row Level Security (RLS) policies on our database so that your data is only accessible to your own account — queries from other users cannot return your content.</p>
+        <p>Authentication tokens are stored in encrypted secure storage on your device. Passwords are hashed; we never store them in plaintext.</p>
+        <p>No method of electronic storage is 100% secure. While we take reasonable precautions, we cannot guarantee absolute security. We will notify you of any breach affecting your personal data as required by applicable law.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 07 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">07</span>
+          <h2>Data Retention</h2>
+        </div>
+        <p>We retain your account and practice content for as long as your account is active. If you delete your account, we will delete your personal information and practice content within <span class="accent">30 days</span>, except where legally required to retain it.</p>
+        <p>Crash and error reports in Sentry are retained according to Sentry's standard policies (typically 90 days). Aggregate, anonymized usage data may be retained indefinitely.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 08 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">08</span>
+          <h2>Your Rights</h2>
+        </div>
+        <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+        <ul style="margin-top:14px;">
+          <li><strong>Access</strong> — request a copy of the personal data we hold about you.</li>
+          <li><strong>Correction</strong> — ask us to correct inaccurate or incomplete data.</li>
+          <li><strong>Deletion</strong> — request that we delete your account and associated personal data.</li>
+          <li><strong>Portability</strong> — request your practice content in a portable format.</li>
+          <li><strong>Objection</strong> — object to certain types of processing, including analytics.</li>
+          <li><strong>Withdraw consent</strong> — where processing is based on consent, withdraw it at any time.</li>
+        </ul>
+        <p style="margin-top:16px; font-size:0.875rem;">To exercise any of these rights, contact us at the address below. We will respond within 30 days and will not discriminate against you for exercising your privacy rights.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 09 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">09</span>
+          <h2>Children's Privacy</h2>
+        </div>
+        <p>Codexi is not directed to children under 13 (or under 16 in the European Economic Area). We do not knowingly collect personal information from children. If you believe a child has created an account without parental consent, please contact us and we will delete the account promptly.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- 10 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">10</span>
+          <h2>Changes to This Policy</h2>
+        </div>
+        <p>We may update this policy from time to time. If we make material changes — such as adding a new analytics provider or changing how we handle your practice content — we will notify you via email and/or an in-app notice at least <span class="accent">14 days</span> before the change takes effect.</p>
+        <p>Continued use of Codexi after the effective date of a revised policy constitutes acceptance of the updated terms.</p>
+      </div>
+
+      <div class="section-rule"></div>
+
+      <!-- Contact -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">✦</span>
+          <h2>Contact Us</h2>
+        </div>
+        <div class="contact-box">
+          <div class="contact-label">Privacy questions &amp; requests</div>
+          <a href="mailto:privacy@codexi.io">privacy@codexi.io</a>
+          <p class="sub">Finding The Beat LLC &nbsp;·&nbsp; Redmond, WA, USA</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Finding The Beat LLC &nbsp;·&nbsp; <span>Codexi</span> &nbsp;·&nbsp; All rights reserved.</p>
+  </footer>
+
+</div>
+</body>
+</html>
