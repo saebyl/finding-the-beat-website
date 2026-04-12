@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codexi — Launch Timeline</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0E0B1A;
+    --bg2: #161226;
+    --surface: #1E1833;
+    --surface2: #261E46;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #E8E4F4;
+    --text2: #A89FC8;
+    --text3: #6B618C;
+    --purple: #7F77DD;
+    --purple-light: #CECBF6;
+    --purple-dim: rgba(127,119,221,0.15);
+    --teal: #1D9E75;
+    --teal-light: #9FE1CB;
+    --teal-dim: rgba(29,158,117,0.12);
+    --amber: #EF9F27;
+    --amber-light: #FAC775;
+    --amber-dim: rgba(239,159,39,0.12);
+    --coral: #D85A30;
+    --coral-dim: rgba(216,90,48,0.12);
+    --green: #639922;
+    --green-dim: rgba(99,153,34,0.12);
+    --red: #E24B4A;
+    --red-dim: rgba(226,75,74,0.12);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1rem 4rem;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem;
+  }
+  .header h1 { font-size: 26px; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+  .header-sub { font-size: 14px; color: var(--text2); }
+  .header-date { font-size: 12px; color: var(--text3); margin-top: 0.75rem; }
+
+  .you-are-here {
+    background: var(--purple-dim);
+    border: 1px solid rgba(127,119,221,0.3);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .you-are-here .icon { font-size: 20px; }
+  .you-are-here .label { font-size: 14px; font-weight: 600; color: var(--purple-light); }
+  .you-are-here .sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  .phase { margin-bottom: 1.5rem; }
+  .phase-card { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .phase-header {
+    padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .phase-title { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
+  .phase-dates { font-size: 12px; color: var(--text3); white-space: nowrap; }
+  .phase-body { padding: 14px 18px; }
+
+  .item-list { display: flex; flex-direction: column; gap: 6px; }
+  .item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 12px; border-radius: 8px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  }
+  .item-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .item-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .item-text strong { color: var(--text); font-weight: 600; }
+
+  .week-table {
+    width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 4px;
+  }
+  .week-table th {
+    text-align: left; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3);
+    padding: 6px 10px; border-bottom: 1px solid var(--border);
+  }
+  .week-table td {
+    padding: 9px 10px; color: var(--text2); border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.5;
+  }
+  .week-table tr:last-child td { border-bottom: none; }
+  .week-table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; min-width: 100px; }
+  .week-table td.dates { color: var(--text3); font-size: 12px; white-space: nowrap; }
+  .week-table td.build { color: var(--text3); font-size: 12px; }
+
+  .done-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 7px;
+    border-radius: 10px; background: var(--green-dim); color: var(--green);
+    border: 1px solid rgba(99,153,34,0.3); margin-left: 6px;
+  }
+  .active-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 7px;
+    border-radius: 10px; background: var(--purple-dim); color: var(--purple-light);
+    border: 1px solid rgba(127,119,221,0.3); margin-left: 6px;
+  }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text3);
+    margin-bottom: 8px; margin-top: 14px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* Milestone */
+  .milestone {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 18px; border-radius: 12px;
+    border: 1px solid var(--border); margin-bottom: 1.5rem;
+  }
+  .milestone-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .milestone-date { font-size: 12px; color: var(--text3); font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+  .milestone-label { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .milestone-details { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* Pricing grid */
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;
+  }
+  .pricing-card {
+    border-radius: 10px; border: 1px solid var(--border);
+    padding: 14px 16px; background: var(--bg2);
+  }
+  .pricing-card.featured {
+    border-color: rgba(127,119,221,0.4); background: var(--purple-dim);
+  }
+  .pricing-tier { font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+  .pricing-card.featured .pricing-tier { color: var(--purple-light); }
+  .pricing-price { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
+  .pricing-period { font-size: 11px; color: var(--text3); margin-bottom: 10px; margin-top: 2px; }
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .pricing-features li { font-size: 12px; color: var(--text2); padding-left: 14px; position: relative; }
+  .pricing-features li::before { content: '·'; position: absolute; left: 4px; color: var(--text3); }
+
+  /* Phase colors */
+  .crunch .phase-card { border-color: rgba(226,75,74,0.2); }
+  .crunch .phase-header { background: rgba(226,75,74,0.05); border-color: rgba(226,75,74,0.15); }
+  .crunch .phase-badge { background: var(--red-dim); color: var(--red); border: 1px solid rgba(226,75,74,0.3); }
+
+  .alpha .phase-card { border-color: rgba(127,119,221,0.2); }
+  .alpha .phase-header { background: rgba(127,119,221,0.05); border-color: rgba(127,119,221,0.15); }
+  .alpha .phase-badge { background: var(--purple-dim); color: var(--purple-light); border: 1px solid rgba(127,119,221,0.3); }
+
+  .polish .phase-card { border-color: rgba(239,159,39,0.2); }
+  .polish .phase-header { background: rgba(239,159,39,0.05); border-color: rgba(239,159,39,0.15); }
+  .polish .phase-badge { background: var(--amber-dim); color: var(--amber-light); border: 1px solid rgba(239,159,39,0.25); }
+
+  .beta .phase-card { border-color: rgba(29,158,117,0.2); }
+  .beta .phase-header { background: rgba(29,158,117,0.05); border-color: rgba(29,158,117,0.15); }
+  .beta .phase-badge { background: var(--teal-dim); color: var(--teal-light); border: 1px solid rgba(29,158,117,0.3); }
+
+  .m-alpha { background: rgba(127,119,221,0.07); border-color: rgba(127,119,221,0.25); }
+  .m-alpha .milestone-label { color: var(--purple-light); }
+  .m-beta { background: rgba(29,158,117,0.07); border-color: rgba(29,158,117,0.3); }
+  .m-beta .milestone-label { color: var(--teal-light); }
+  .m-launch { background: rgba(239,159,39,0.07); border-color: rgba(239,159,39,0.3); }
+  .m-launch .milestone-label { color: var(--amber-light); }
+
+  .parallel-note {
+    background: rgba(127,119,221,0.07); border: 1px solid rgba(127,119,221,0.2);
+    border-radius: 8px; padding: 10px 14px; font-size: 13px;
+    color: var(--text2); margin-top: 10px;
+  }
+  .parallel-note strong { color: var(--purple-light); }
+
+  .dot-purple { background: var(--purple); }
+  .dot-teal { background: var(--teal); }
+  .dot-amber { background: var(--amber); }
+  .dot-muted { background: var(--text3); }
+
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text3);
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+
+  @media (max-width: 520px) {
+    body { padding: 1rem 0.75rem 3rem; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .week-table td.dates, .week-table td.build { display: none; }
+    .phase-dates { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">Finding The Beat LLC</div>
+    <h1>Codexi — Launch Timeline</h1>
+    <div class="header-sub">Alpha → community beta → production. Every phase, every gate.</div>
+    <div class="header-date">Last updated: April 12, 2026</div>
+  </div>
+
+  <div class="you-are-here">
+    <div class="icon">📍</div>
+    <div>
+      <div class="label">You are here — April 12, 2026</div>
+      <div class="sub">Day 1, Week 1 of alpha testing. Account setup &amp; auth tasks live with testers now.</div>
+    </div>
+  </div>
+
+  <!-- ── ALPHA TESTING ─────────────────────────────────────────── -->
+
+  <div class="phase alpha">
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-badge">Apr 12 → Jun 6</span>
+        <span class="phase-title">Alpha testing — 8 task weeks</span>
+        <span class="phase-dates">8 weeks</span>
+      </div>
+      <div class="phase-body">
+
+        <div class="section-label">Tester task schedule</div>
+        <table class="week-table">
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th class="dates">Dates</th>
+              <th>Tester task</th>
+              <th class="build">Parallel build</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Wks 1–2 <span class="active-tag">Now</span></td>
+              <td class="dates">Apr 12–25</td>
+              <td>Account setup + authentication</td>
+              <td class="build">Working subtypes, FAB quick capture, Create New, Collections refinement, Favorites, Recently Viewed, Global Search</td>
+            </tr>
+            <tr>
+              <td>Week 3</td>
+              <td class="dates">Apr 26–May 2</td>
+              <td>Components — create, edit, detail, library</td>
+              <td class="build">Smoke test; Quick Capture for components</td>
+            </tr>
+            <tr>
+              <td>Week 4</td>
+              <td class="dates">May 3–9</td>
+              <td>Workings — create, subtype, sub-workings</td>
+              <td class="build">Working subtype UX; sub-working picker polish</td>
+            </tr>
+            <tr>
+              <td>Week 5</td>
+              <td class="dates">May 10–16</td>
+              <td>Rituals — create, edit, detail</td>
+              <td class="build">Light smoke test; any ritual polish from feedback</td>
+            </tr>
+            <tr>
+              <td>Week 6</td>
+              <td class="dates">May 17–23</td>
+              <td>Books + Journal entries</td>
+              <td class="build">Journal list / detail / edit screens</td>
+            </tr>
+            <tr>
+              <td>Week 7</td>
+              <td class="dates">May 24–30</td>
+              <td>Collections — full flow</td>
+              <td class="build">Collections refinement complete; end-to-end smoke test</td>
+            </tr>
+            <tr>
+              <td>Week 8</td>
+              <td class="dates">May 31–Jun 6</td>
+              <td>Freemium limits + JSON export</td>
+              <td class="build">Freemium enforcement, tier utilities, JSON export via expo-sharing</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="parallel-note" style="margin-top:14px;">
+          <strong>Parallel principle:</strong> Build for the <em>next</em> week's tasks while testers run the current week. P0/P1 tester issues interrupt build; P2/P3 go to the backlog for the polish phase.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FREEMIUM MODEL ─────────────────────────────────────────── -->
+
+  <div class="phase alpha">
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-badge">Week 8 feature</span>
+        <span class="phase-title">Freemium pricing model</span>
+        <span class="phase-dates">enforced at beta</span>
+      </div>
+      <div class="phase-body">
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-tier">Free</div>
+            <div class="pricing-price">$0</div>
+            <div class="pricing-period">forever</div>
+            <ul class="pricing-features">
+              <li>Unlimited components</li>
+              <li>20 workings + rituals combined</li>
+              <li>10 collections</li>
+              <li>1 book</li>
+              <li>Unlimited journal entries</li>
+              <li>5 custom tags · tag 10 items</li>
+              <li>JSON data export</li>
+              <li>Dark + light theme</li>
+              <li>Can join groups (not create)</li>
+              <li>Cannot publish publicly</li>
+            </ul>
+          </div>
+          <div class="pricing-card featured">
+            <div class="pricing-tier">Premium</div>
+            <div class="pricing-price">$3.99</div>
+            <div class="pricing-period">per month · or $39/year</div>
+            <ul class="pricing-features">
+              <li>Everything in Free</li>
+              <li>Unlimited workings + rituals</li>
+              <li>Unlimited collections</li>
+              <li>Unlimited books</li>
+              <li>Unlimited custom tags + tagging</li>
+              <li>Create groups</li>
+              <li>Publish content publicly</li>
+              <li>PDF export (Phase 2)</li>
+              <li>Premium themes (Phase 2)</li>
+              <li>Astrological timing (Phase 2)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="item-list" style="margin-top:12px;">
+          <div class="item"><div class="item-dot dot-purple"></div><div class="item-text"><strong>Alpha testers:</strong> all limits suspended during alpha — everyone gets premium access for free to test the full feature set.</div></div>
+          <div class="item"><div class="item-dot dot-purple"></div><div class="item-text"><strong>Beta launch:</strong> limits enforced. Early adopters offered discounted first-year pricing.</div></div>
+          <div class="item"><div class="item-dot dot-purple"></div><div class="item-text"><strong>RevenueCat integration</strong> ships at beta — handles subscriptions, receipts, and restore purchase across iOS + Android.</div></div>
+          <div class="item"><div class="item-dot dot-purple"></div><div class="item-text"><strong>Institution tiers</strong> (Phase 3): $10 / $75 / $200+ per month for covens, schools, and temples.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ALPHA ENDS ─────────────────────────────────────────────── -->
+
+  <div class="milestone m-alpha">
+    <div class="milestone-icon">🌙</div>
+    <div>
+      <div class="milestone-date">June 6, 2026</div>
+      <div class="milestone-label">Alpha testing ends</div>
+      <div class="milestone-details">
+        All 8 task weeks complete. Freemium enforcement live. JSON export shipped.<br>
+        Real usage data, friction points, and crash patterns in hand.<br>
+        Tally feedback forms remain open. Shift focus to polish.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── POLISH PHASE ───────────────────────────────────────────── -->
+
+  <div class="phase polish">
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-badge">Jun 7 → Jul 31</span>
+        <span class="phase-title">Polish + refinement — alpha feedback loop</span>
+        <span class="phase-dates">~8 weeks</span>
+      </div>
+      <div class="phase-body">
+        <div class="item-list">
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>Iterate on alpha feedback</strong> — stability, flow, friction points. Alpha testers continue submitting via Tally forms.</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>UX polish pass</strong> across all screens — spacing, transitions, empty states, error messages.</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>Onboarding refinement</strong> — based on real confusion points from weeks 1–2 tester data.</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>Code cleanup + atomization</strong> — token audit, component extraction, documentation update (Track I).</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>RevenueCat integration</strong> — wire subscription management for beta launch enforcement.</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>App Store + Google Play prep</strong> — screenshots, descriptions, metadata, review queue.</div></div>
+          <div class="item"><div class="item-dot dot-amber"></div><div class="item-text"><strong>Temple of Witchcraft outreach</strong> — confirm beta launch timing and early adopter pricing with Christopher Penczak.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMMUNITY BETA ─────────────────────────────────────────── -->
+
+  <div class="milestone m-beta">
+    <div class="milestone-icon">🌑</div>
+    <div>
+      <div class="milestone-date">August 2026</div>
+      <div class="milestone-label">Community beta launch</div>
+      <div class="milestone-details">
+        Public access — open to anyone, freemium limits enforced.<br>
+        Temple of Witchcraft community early adopter pricing.<br>
+        Discounted first-year Premium for beta joiners.<br>
+        Temple Fest (September) — demo and talk opportunity if timing aligns.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BETA FEEDBACK ──────────────────────────────────────────── -->
+
+  <div class="phase beta">
+    <div class="phase-card">
+      <div class="phase-header">
+        <span class="phase-badge">Aug → Sep</span>
+        <span class="phase-title">Beta feedback loop</span>
+        <span class="phase-dates">~2 months</span>
+      </div>
+      <div class="phase-body">
+        <div class="item-list">
+          <div class="item"><div class="item-dot dot-teal"></div><div class="item-text">Broader audience through Temple of Witchcraft + community word-of-mouth.</div></div>
+          <div class="item"><div class="item-dot dot-teal"></div><div class="item-text">Stability fixes and final polish from expanded beta feedback.</div></div>
+          <div class="item"><div class="item-dot dot-teal"></div><div class="item-text">App Store review process — build in 2–3 week buffer before October target.</div></div>
+          <div class="item"><div class="item-dot dot-teal"></div><div class="item-text">Marketing + community prep for public production launch.</div></div>
+          <div class="item"><div class="item-dot dot-teal"></div><div class="item-text">Temple Fest September — in-person demo with pre-populated seed content onboarding experience.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRODUCTION LAUNCH ──────────────────────────────────────── -->
+
+  <div class="milestone m-launch">
+    <div class="milestone-icon">🕯️</div>
+    <div>
+      <div class="milestone-date">October 2026</div>
+      <div class="milestone-label">Production release</div>
+      <div class="milestone-details">
+        iOS App Store + Google Play — public release.<br>
+        Finding The Beat LLC.<br>
+        Phase 2 (astrological timing, divination, PDF export, premium themes) begins post-launch.<br>
+        Phase 3 (institution tiers — covens, mystery schools) follows Phase 2.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    <span>Codexi — Finding The Beat LLC</span>
+    <span>Updated April 12, 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
