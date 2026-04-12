@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codexi — where your practice lives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-top:    #3D3066;
+      --bg-mid:    #261E46;
+      --bg-bottom: #0E0B1C;
+      --parchment: #F2E9DA;
+      --parchment-dark: #EAE0CC;
+      --parchment-line: rgba(35,29,63,0.10);
+      --ink:       #231D3F;
+      --ink-mid:   #3C325A;
+      --ink-soft:  #6B5F88;
+      --gold:      #E6C36A;
+      --gold-dim:  rgba(230,195,106,0.18);
+      --gold-border: rgba(230,195,106,0.35);
+      --purple-accent: #5B3FA0;
+      --text-on-dark: #F2E9DA;
+      --text-on-dark-soft: rgba(242,233,218,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-mid) 42%, var(--bg-bottom) 100%);
+      background-attachment: fixed;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 32px;
+      position: relative;
+      z-index: 10;
+    }
+    .nav-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-wordmark svg {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+    .nav-wordmark-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--parchment);
+      letter-spacing: 0.06em;
+      line-height: 1;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-on-dark-soft);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--parchment); }
+    .nav-links .discord-btn {
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-links .discord-btn:hover {
+      background: rgba(230,195,106,0.28);
+      color: var(--gold);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 64px 24px 80px;
+    }
+
+    /* Hero logo */
+    .hero-logo {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 8px 24px rgba(230,195,106,0.18));
+    }
+
+    .hero-wordmark {
+      font-family: 'Caveat', cursive;
+      font-size: 4.5rem;
+      font-weight: 600;
+      color: var(--parchment);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .hero-tagline {
+      font-size: 1rem;
+      color: var(--text-on-dark-soft);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    /* Beta badge */
+    .beta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 24px;
+      padding: 6px 16px;
+      margin-bottom: 40px;
+    }
+    .beta-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+    .beta-badge span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Description card */
+    .hero-card {
+      background: var(--parchment);
+      border-radius: 28px;
+      padding: 32px 36px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.4),
+        0 4px 14px rgba(0,0,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+      text-align: left;
+      margin-bottom: 36px;
+    }
+    .hero-card p {
+      font-size: 0.9375rem;
+      color: var(--ink-mid);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .hero-card p:last-child { margin-bottom: 0; }
+    .hero-card strong { color: var(--ink); font-weight: 600; }
+
+    /* CTA buttons */
+    .cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 32px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--parchment);
+      color: var(--ink);
+    }
+    .btn-discord {
+      background: transparent;
+      border: 1.5px solid rgba(230,195,106,0.5);
+      color: var(--gold);
+    }
+
+    /* ── Tester section ── */
+    .tester-section {
+      padding: 0 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(242,233,218,0.35);
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .tester-card {
+      background: var(--parchment);
+      border-radius: 24px;
+      padding: 24px 28px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .tester-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tester-content h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .tester-content p {
+      font-size: 0.875rem;
+      color: var(--ink-mid);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .tester-content a {
+      color: var(--purple-accent);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .tester-content a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(242,233,218,0.28);
+      letter-spacing: 0.04em;
+    }
+    .footer-copy span { color: rgba(230,195,106,0.5); }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: rgba(242,233,218,0.35);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(242,233,218,0.7); }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 40px 16px 56px; }
+      .hero-wordmark { font-size: 3.2rem; }
+      .hero-card { padding: 24px 20px; border-radius: 20px; }
+      .tester-section { padding: 0 16px 60px; }
+      footer { flex-direction: column; align-items: flex-start; padding: 20px; }
+      .cta-group { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-wordmark">
+      <svg width="1145" height="1137" viewBox="0 0 1145 1137" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="599.5" cy="365" rx="374.5" ry="365" fill="url(#nav_grad)"/><path d="M629.78 733.806C644.243 717.115 669.497 715.303 686.194 729.762C702.894 744.223 704.709 769.485 690.248 786.185L660.01 760C690.248 786.185 690.243 786.191 690.238 786.196C690.236 786.198 690.231 786.204 690.227 786.208C690.22 786.216 690.212 786.226 690.204 786.235C690.187 786.255 690.167 786.278 690.145 786.303C690.102 786.353 690.049 786.414 689.987 786.484C689.863 786.626 689.701 786.809 689.505 787.03C689.112 787.473 688.576 788.072 687.91 788.803C686.58 790.262 684.715 792.269 682.413 794.638C677.86 799.323 671.353 805.684 663.715 812.119C656.235 818.421 646.726 825.603 636.176 831.267C626.336 836.549 611.312 842.868 594.038 841.901C578.246 841.018 564.849 834.633 555.542 828.982C545.797 823.067 537.24 815.92 530.553 809.682C523.746 803.33 518.067 797.157 514.117 792.621C512.119 790.327 510.507 788.387 509.354 786.968C508.777 786.257 508.31 785.672 507.965 785.234C507.792 785.015 507.649 784.832 507.537 784.689C507.481 784.617 507.433 784.554 507.392 784.502C507.372 784.476 507.354 784.452 507.338 784.431C507.33 784.42 507.321 784.411 507.314 784.401C507.311 784.397 507.306 784.39 507.304 784.388C507.3 784.381 507.295 784.375 539.01 760L507.295 784.375C493.833 766.859 497.119 741.747 514.635 728.285C532.146 714.826 557.251 718.108 570.716 735.613C570.714 735.612 570.71 735.606 570.708 735.603C570.703 735.596 570.697 735.59 570.693 735.584C570.69 735.58 570.687 735.577 570.684 735.573C570.702 735.596 570.73 735.63 570.766 735.676C570.89 735.832 571.118 736.119 571.442 736.519C572.093 737.32 573.117 738.556 574.446 740.082C577.15 743.186 580.887 747.23 585.128 751.187C589.49 755.257 593.615 758.508 597.057 760.598C597.329 760.763 597.584 760.912 597.821 761.048C597.984 760.964 598.157 760.877 598.336 760.781C602.186 758.714 606.978 755.312 612.167 750.941C617.196 746.703 621.723 742.298 625.038 738.887C626.67 737.208 627.947 735.832 628.775 734.923C629.188 734.47 629.486 734.137 629.657 733.944L629.78 733.806Z" fill="#F2E9DA"/><path d="M970.074 639.254C991.473 633.767 1013.27 646.665 1018.76 668.064C1024.24 689.463 1011.34 711.259 989.945 716.746L670.158 798.746C648.759 804.233 626.964 791.335 621.477 769.936C615.989 748.537 628.888 726.741 650.287 721.254L970.074 639.254Z" fill="#F2E9DA"/><path d="M588.885 300.533C588.885 295.672 594.495 293.181 597.873 296.545C608.275 306.907 614.321 329.657 607.17 346.918L606.745 347.879L606.809 347.896C610.129 348.63 613.2 345.521 619.044 335.893L619.787 334.656C620.218 333.935 620.804 333.326 621.498 332.878C622.192 332.43 622.976 332.155 623.789 332.073C624.602 331.991 625.422 332.106 626.186 332.407C626.949 332.708 627.636 333.189 628.192 333.811C635.279 341.737 642.01 357.987 642.01 368.443C642.01 392 622.932 411 599.51 411C576.087 411 557.01 392 557.01 368.437C557.01 355.998 562.439 342.389 570.992 333.634L574.206 330.381C575.486 329.078 576.512 328.006 577.489 326.934C585.086 318.583 588.885 310.784 588.885 300.533Z" fill="#E6C36A"/><path d="M228.945 639.254C207.546 633.767 185.75 646.665 180.263 668.064C174.776 689.463 187.675 711.259 209.074 716.746L528.861 798.746C550.26 804.233 572.055 791.335 577.543 769.936C583.03 748.537 570.131 726.741 548.732 721.254L228.945 639.254Z" fill="#F2E9DA"/><path d="M272.01 579C330.958 579 373.343 580.831 412.197 593.845C451.539 607.023 485.452 630.997 529.499 671.233C537.654 678.683 538.226 691.334 530.776 699.489C523.326 707.644 510.675 708.216 502.52 700.767C459.895 661.828 430.924 642.302 399.492 631.773C367.571 621.082 331.293 619 272.01 619C260.964 619 252.01 610.046 252.01 599C252.01 587.954 260.964 579 272.01 579Z" fill="#F2E9DA"/><path d="M928.01 579C869.061 579 826.676 580.831 787.822 593.845C748.48 607.023 714.567 630.997 670.52 671.233C662.365 678.683 661.793 691.334 669.243 699.489C676.693 707.644 689.344 708.216 697.499 700.767C740.124 661.828 769.095 642.302 800.527 631.773C832.448 621.082 868.726 619 928.01 619C939.055 619 948.01 610.046 948.01 599C948.01 587.954 939.055 579 928.01 579Z" fill="#F2E9DA"/><path d="M566.01 458C566.01 446.954 574.964 438 586.01 438H614.01C625.055 438 634.01 446.954 634.01 458V741C634.01 752.046 625.055 761 614.01 761H586.01C574.964 761 566.01 752.046 566.01 741V458Z" fill="#F2E9DA"/><defs><radialGradient id="nav_grad" cx="0" cy="0" r="1" gradientTransform="matrix(-0.232336 453.849 -465.661 -0.226152 599.5 276.151)" gradientUnits="userSpaceOnUse"><stop stop-color="#C3A24C" stop-opacity="0.4"/><stop offset="0.725962" stop-color="#5D4D24" stop-opacity="0"/></radialGradient></defs></svg>
+      <span class="nav-wordmark-text">Codexi</span>
+    </a>
+    <div class="nav-links">
+      <a href="#for-testers">Beta Info</a>
+      <a href="https://saebylmcdoulett.yatrack2.com/2NVjKBlBFtW4mVgIo-YLct56MeO9DqT2WHJXJd2BWw7QFXRJ-nQEsWJIzpDPalvZuvsx4QKbWvBkP7DYMOZQK3aW1-76F55UsYb_gNdol4pXrw8vaXIqaR8vsZxx6IElgwA3oOOfk8QUmO7Osv1eBrpOgTIjXy7DkVgyexUkNoJPek68ZVkFniL2yUV4" target="_blank" class="discord-btn">Join Discord</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+
+    <svg class="hero-logo" viewBox="0 0 1145 1137" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="599.5" cy="365" rx="374.5" ry="365" fill="url(#hero_grad)"/><path d="M629.78 733.806C644.243 717.115 669.497 715.303 686.194 729.762C702.894 744.223 704.709 769.485 690.248 786.185L660.01 760C690.248 786.185 690.243 786.191 690.238 786.196C690.236 786.198 690.231 786.204 690.227 786.208C690.22 786.216 690.212 786.226 690.204 786.235C690.187 786.255 690.167 786.278 690.145 786.303C690.102 786.353 690.049 786.414 689.987 786.484C689.863 786.626 689.701 786.809 689.505 787.03C689.112 787.473 688.576 788.072 687.91 788.803C686.58 790.262 684.715 792.269 682.413 794.638C677.86 799.323 671.353 805.684 663.715 812.119C656.235 818.421 646.726 825.603 636.176 831.267C626.336 836.549 611.312 842.868 594.038 841.901C578.246 841.018 564.849 834.633 555.542 828.982C545.797 823.067 537.24 815.92 530.553 809.682C523.746 803.33 518.067 797.157 514.117 792.621C512.119 790.327 510.507 788.387 509.354 786.968C508.777 786.257 508.31 785.672 507.965 785.234C507.792 785.015 507.649 784.832 507.537 784.689C507.481 784.617 507.433 784.554 507.392 784.502C507.372 784.476 507.354 784.452 507.338 784.431C507.33 784.42 507.321 784.411 507.314 784.401C507.311 784.397 507.306 784.39 507.304 784.388C507.3 784.381 507.295 784.375 539.01 760L507.295 784.375C493.833 766.859 497.119 741.747 514.635 728.285C532.146 714.826 557.251 718.108 570.716 735.613C570.714 735.612 570.71 735.606 570.708 735.603C570.703 735.596 570.697 735.59 570.693 735.584C570.69 735.58 570.687 735.577 570.684 735.573C570.702 735.596 570.73 735.63 570.766 735.676C570.89 735.832 571.118 736.119 571.442 736.519C572.093 737.32 573.117 738.556 574.446 740.082C577.15 743.186 580.887 747.23 585.128 751.187C589.49 755.257 593.615 758.508 597.057 760.598C597.329 760.763 597.584 760.912 597.821 761.048C597.984 760.964 598.157 760.877 598.336 760.781C602.186 758.714 606.978 755.312 612.167 750.941C617.196 746.703 621.723 742.298 625.038 738.887C626.67 737.208 627.947 735.832 628.775 734.923C629.188 734.47 629.486 734.137 629.657 733.944L629.78 733.806Z" fill="#F2E9DA"/><path d="M970.074 639.254C991.473 633.767 1013.27 646.665 1018.76 668.064C1024.24 689.463 1011.34 711.259 989.945 716.746L670.158 798.746C648.759 804.233 626.964 791.335 621.477 769.936C615.989 748.537 628.888 726.741 650.287 721.254L970.074 639.254Z" fill="#F2E9DA"/><path d="M588.885 300.533C588.885 295.672 594.495 293.181 597.873 296.545C608.275 306.907 614.321 329.657 607.17 346.918L606.745 347.879L606.809 347.896C610.129 348.63 613.2 345.521 619.044 335.893L619.787 334.656C620.218 333.935 620.804 333.326 621.498 332.878C622.192 332.43 622.976 332.155 623.789 332.073C624.602 331.991 625.422 332.106 626.186 332.407C626.949 332.708 627.636 333.189 628.192 333.811C635.279 341.737 642.01 357.987 642.01 368.443C642.01 392 622.932 411 599.51 411C576.087 411 557.01 392 557.01 368.437C557.01 355.998 562.439 342.389 570.992 333.634L574.206 330.381C575.486 329.078 576.512 328.006 577.489 326.934C585.086 318.583 588.885 310.784 588.885 300.533Z" fill="#E6C36A"/><path d="M228.945 639.254C207.546 633.767 185.75 646.665 180.263 668.064C174.776 689.463 187.675 711.259 209.074 716.746L528.861 798.746C550.26 804.233 572.055 791.335 577.543 769.936C583.03 748.537 570.131 726.741 548.732 721.254L228.945 639.254Z" fill="#F2E9DA"/><path d="M272.01 579C330.958 579 373.343 580.831 412.197 593.845C451.539 607.023 485.452 630.997 529.499 671.233C537.654 678.683 538.226 691.334 530.776 699.489C523.326 707.644 510.675 708.216 502.52 700.767C459.895 661.828 430.924 642.302 399.492 631.773C367.571 621.082 331.293 619 272.01 619C260.964 619 252.01 610.046 252.01 599C252.01 587.954 260.964 579 272.01 579Z" fill="#F2E9DA"/><path d="M928.01 579C869.061 579 826.676 580.831 787.822 593.845C748.48 607.023 714.567 630.997 670.52 671.233C662.365 678.683 661.793 691.334 669.243 699.489C676.693 707.644 689.344 708.216 697.499 700.767C740.124 661.828 769.095 642.302 800.527 631.773C832.448 621.082 868.726 619 928.01 619C939.055 619 948.01 610.046 948.01 599C948.01 587.954 939.055 579 928.01 579Z" fill="#F2E9DA"/><path d="M566.01 458C566.01 446.954 574.964 438 586.01 438H614.01C625.055 438 634.01 446.954 634.01 458V741C634.01 752.046 625.055 761 614.01 761H586.01C574.964 761 566.01 752.046 566.01 741V458Z" fill="#F2E9DA"/><defs><radialGradient id="hero_grad" cx="0" cy="0" r="1" gradientTransform="matrix(-0.232336 453.849 -465.661 -0.226152 599.5 276.151)" gradientUnits="userSpaceOnUse"><stop stop-color="#C3A24C" stop-opacity="0.4"/><stop offset="0.725962" stop-color="#5D4D24" stop-opacity="0"/></radialGradient></defs></svg>
+
+    <h1 class="hero-wordmark">Codexi</h1>
+    <p class="hero-tagline">where your practice lives</p>
+
+    <div class="beta-badge">
+      <span class="beta-dot"></span>
+      <span>Friends &amp; Family Beta — April 2026</span>
+    </div>
+
+    <div class="hero-card">
+      <p>
+        <strong>Codexi is a spiritual practice management app and digital grimoire</strong> — a single place to organize your components, workings, rituals, and journals, with a curated reference library built in from the start.
+      </p>
+      <p>
+        Whether you're tracking a blend you've been perfecting, documenting a ritual, or keeping a reflective journal, Codexi keeps everything connected and yours.
+      </p>
+      <p>
+        Right now, a small group of friends and community members are testing the app ahead of a wider beta in September. Thank you for being part of it.
+      </p>
+    </div>
+
+    <div class="cta-group">
+      <a href="https://saebylmcdoulett.yatrack2.com/2NVjKBlBFtW4mVgIo-YLct56MeO9DqT2WHJXJd2BWw7QFXRJ-nQEsWJIzpDPalvZuvsx4QKbWvBkP7DYMOZQK3aW1-76F55UsYb_gNdol4pXrw8vaXIqaR8vsZxx6IElgwA3oOOfk8QUmO7Osv1eBrpOgTIjXy7DkVgyexUkNoJPek68ZVkFniL2yUV4" target="_blank" class="btn btn-discord">
+        ✦ &nbsp;Join the Discord
+      </a>
+    </div>
+
+  </section>
+
+  <!-- Beta tester info -->
+  <section class="tester-section" id="for-testers">
+
+    <p class="section-eyebrow">For Beta Testers</p>
+
+    <div class="tester-card">
+      <div class="tester-icon">📋</div>
+      <div class="tester-content">
+        <h3>What we're testing</h3>
+        <p>This is a task-based beta running April–June 2026. You'll receive a testing guide with specific flows to try. Your feedback directly shapes the app before the September community launch.</p>
+      </div>
+    </div>
+
+    <div class="tester-card">
+      <div class="tester-icon">💬</div>
+      <div class="tester-content">
+        <h3>Questions &amp; community</h3>
+        <p>The Discord is the best place to ask questions, share feedback, and connect with other testers. <a href="https://saebylmcdoulett.yatrack2.com/2NVjKBlBFtW4mVgIo-YLct56MeO9DqT2WHJXJd2BWw7QFXRJ-nQEsWJIzpDPalvZuvsx4QKbWvBkP7DYMOZQK3aW1-76F55UsYb_gNdol4pXrw8vaXIqaR8vsZxx6IElgwA3oOOfk8QUmO7Osv1eBrpOgTIjXy7DkVgyexUkNoJPek68ZVkFniL2yUV4" target="_blank">Join us here →</a></p>
+      </div>
+    </div>
+
+    <div class="tester-card">
+      <div class="tester-icon">🔒</div>
+      <div class="tester-content">
+        <h3>Your data &amp; privacy</h3>
+        <p>Everything you create in the app is private to your account. Read our <a href="/privacy/">Privacy Policy</a> for the full details on what we collect and your rights.</p>
+      </div>
+    </div>
+
+    <div class="tester-card">
+      <div class="tester-icon">📅</div>
+      <div class="tester-content">
+        <h3>Timeline</h3>
+        <p><strong>Now–June 2026:</strong> Friends &amp; family beta testing<br>
+        <strong>August 2026:</strong> Community beta launch<br>
+        <strong>October 2026:</strong> Public release</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="footer-copy">© 2026 Finding The Beat LLC &nbsp;·&nbsp; <span>Codexi</span></p>
+    <div class="footer-links">
+      <a href="/privacy/">Privacy Policy</a>
+      <a href="mailto:hello@codexi.io">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
